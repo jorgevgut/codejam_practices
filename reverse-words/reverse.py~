@@ -1,0 +1,7 @@
+import sys
+
+args = sys.argv
+
+filename = args.first
+
+print filename
