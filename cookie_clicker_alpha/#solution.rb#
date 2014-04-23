@@ -1,0 +1,49 @@
+filename = ARGV.first
+file = File.open(filename)
+out = File.open("solution.out","w")
+
+test_cases = file.readline.chomp.to_i
+
+# 2 cookies x second
+#at least C cookies x cookie farm
+# F cookie farms gives extra cookies per second
+#X cookies to win
+
+for i in (0..(test_cases-1))
+
+  result  = 0
+  cfx = file.readline.chomp.split.map(&:to_f)
+  
+  best_time = -1
+  farm_time = 0 
+  current_time = 0
+  rate = 2
+  farms = 0
+    c = cfx[0]
+  original_c = cfx[0]
+    f = cfx[1]
+    x = cfx[2]
+
+  while true
+    
+   
+    current_rate = rate + (farms*f)
+    current_time = ((x)/current_rate) + farm_time
+
+    #Evaluate with 1 more farm
+    if(best_time !=-1 && (best_time < current_time))
+      current_time = best_time
+      break
+    end
+    best_time = current_time
+    farm_time += (c/current_rate)
+    farms+=1
+  end
+  
+  out.write("Case ##{i+1}: #{current_time.round(10)}\n")
+  
+end
+
+file.close
+out.close
+
